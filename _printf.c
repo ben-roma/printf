@@ -71,6 +71,81 @@ int _printf(const char *format, ...)
 						}
 					}
 					break;
+				case 'u':
+					{
+						unsigned int num = va_arg(args, unsigned int);
+						int digits = 0;
+						char buffer[20];
+
+						do {
+							buffer[digits++] = num % 10 + '0';
+							num /= 10;
+						} while (num != 0);
+
+						while (digits > 0)
+						{
+							write(1, &buffer[--digits], 1);
+							count++;
+						}
+					}
+					break;
+				case 'o':
+					{
+						unsigned int num = va_arg(args, unsigned int);
+						int digits = 0;
+						char buffer[20];
+
+						do {
+							buffer[digits++] = num % 8 + '0';
+							num /= 8;
+						} while (num != 0);
+
+						while (digits > 0)
+						{
+							write(1, &buffer[--digits], 1);
+							count++;
+						}
+					}
+					break;
+				case 'x':
+					{
+						unsigned int num = va_arg(args, unsigned int);
+						int digits = 0;
+						char buffer[20];
+
+						do {
+							int remainder = num % 16;
+							buffer[digits++] = (remainder < 10) ? remainder + '0' : remainder - 10 + 'a';
+							num /= 16;
+						} while (num != 0);
+
+						while (digits > 0)
+						{
+							write(1, &buffer[--digits], 1);
+							count++;
+						}
+					}
+					break;
+				case 'X':
+					{
+						unsigned int num = va_arg(args, unsigned int);
+						int digits = 0;
+						char buffer[20];
+
+						do {
+							int remainder = num % 16;
+
+							buffer[digits++] = (remainder < 10) ? remainder + '0' : remainder - 10 + 'A';
+							num /= 16;
+						} while (num != 0);
+
+						while (digits > 0)
+						{
+							write(1, &buffer[--digits], 1);
+							count++;
+						}
+					}
+					break;
 				case 'b':
 					{
 						unsigned int num = va_arg(args, unsigned int);
