@@ -13,6 +13,7 @@ int _printf(const char *format, ...)
 {
 	int count = 0;
 	va_list args;
+
 	va_start(args, format);
 
 	while (*format)
@@ -42,7 +43,7 @@ int _printf(const char *format, ...)
 		format++;
 	}
 	va_end(args);
-	return count;
+	return (count);
 }
 
 /**
@@ -53,7 +54,7 @@ int _printf(const char *format, ...)
  */
 int _putchar(char c)
 {
-	return write(1, &c, 1);
+	return (write(1, &c, 1));
 }
 
 /**
@@ -65,10 +66,11 @@ int _putchar(char c)
 int _puts(char *str)
 {
 	int count = 0;
+
 	while (*str)
 	{
 		count += _putchar(*str);
 		str++;
 	}
-	return count;
+	return (count);
 }
