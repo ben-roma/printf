@@ -71,6 +71,25 @@ int _printf(const char *format, ...)
 						}
 					}
 					break;
+				case 'b':
+					{
+						unsigned int num = va_arg(args, unsigned int);
+						int bits[32];
+						int index = 0;
+
+						while (num > 0)
+						{
+							bits[index++] = num % 2;
+							num /= 2;
+						}
+						while (--index >= 0)
+						{
+							char bit = bits[index] + '0';
+							write(1, &bit, 1);
+							count++;
+						}
+					}
+					break;
 				default:
 					write(1, "%", 1);
 					write(1, format, 1);
