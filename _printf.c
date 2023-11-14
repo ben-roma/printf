@@ -1,6 +1,55 @@
 #include "main.h"
 #include <stdarg.h>
 #include <unistd.h>
+/**
+ * Count - the number of digits in an integer.
+ *
+ * @param n: The integer for which to count digits.
+ * @return: The number of digits in the integer.
+ */
+int num_digits(int n)
+{
+	int count = 0;
+
+	while (n != 0)
+	{
+		n /= 10;
+		count++;
+	}
+	return (count);
+}
+
+/**
+ * Print - an integer to the standard output.
+ *
+ * @param n: The integer to be printed.
+ * @return: The number of digits in the printed integer.
+ */
+int print_integer(int n)
+{
+	int digits = num_digits(n);
+	int divisor, digit;
+
+	if (n < 0)
+	{
+		_putchar('-');
+		n = -n;
+	}
+
+	while (digits > 0)
+	{
+		divisor = 1;
+		for (int i = 1; i < digits; i++)
+		{
+			divisor *= 10;
+		}
+		digit = n / divisor;
+		_putchar(digit + '0');
+		n %= divisor;
+		digits--;
+	}
+	return (num_digits(n));
+}
 
 /**
  * _printf - Custom printf function
@@ -28,6 +77,10 @@ int _printf(const char *format, ...)
 					break;
 				case 's':
 					count += _puts(va_arg(args, char *));
+					break;
+				case 'd':
+				case 'i':
+					count += print_integer(va_arg(args, int));
 					break;
 				case '%':
 					count += _putchar('%');
