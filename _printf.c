@@ -25,6 +25,7 @@ int _printf(const char *format, ...)
 				case 'c':
 					{
 						char c = va_arg(args, int);
+
 						write(1, &c, 1);
 						count++;
 					}
@@ -32,6 +33,7 @@ int _printf(const char *format, ...)
 				case 's':
 					{
 						char *str = va_arg(args, char *);
+
 						while (*str)
 						{
 							write(1, str, 1);
@@ -50,15 +52,14 @@ int _printf(const char *format, ...)
 						int num = va_arg(args, int);
 						int digits = 0;
 						char buffer[20];
-						
+
 						if (num < 0)
 						{
 							write(1, "-", 1);
 							count++;
 							num = -num;
 						}
-						do
-						{
+						do {
 							buffer[digits++] = num % 10 + '0';
 							num /= 10;
 						} while (num != 0);
@@ -87,5 +88,5 @@ int _printf(const char *format, ...)
 
 	va_end(args);
 
-	return count;
+	return (count);
 }
