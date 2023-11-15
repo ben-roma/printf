@@ -76,3 +76,47 @@ int handle_format(va_list args, char specifier)
 	}
 	return (0);
 }
+
+/**
+ * handle_di - Handle d and i conversion specifiers
+ * @args: Variable arguments list
+ *
+ * Return: Number of characters printed for d and i specifiers
+ */
+int handle_di(va_list args)
+{
+	int num = va_arg(args, int);
+	int count = 0;
+
+	if (num < 0)
+	{
+		write(1, "-", 1);
+		num = -num;
+		count++;
+	}
+
+	count += print_number(num);
+
+	return (count);
+}
+
+/**
+ * print_number - Print an integer
+ * @num: Integer to print
+ *
+ * Return: Number of characters printed
+ */
+int print_number(int num)
+{
+	char temp[2];
+
+	if (num / 10)
+	{
+		return (print_number(num / 10) +
+				write(1, (temp[0] = num % 10 + '0', temp), 1));
+	}
+	else
+	{
+		return (write(1, (temp[0] = num + '0', temp), 1));
+	}
+}
