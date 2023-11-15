@@ -42,45 +42,6 @@ int _printf(const char *format, ...)
 }
 
 /**
- * handle_format - Handle conversion specifiers
- * @args: Variable arguments list
- * @specifier: Conversion specifier
- *
- * Return: Number of characters printed for the specifier
- */
-int handle_format(va_list args, char specifier)
-{
-	int len = 0;
-
-	if (specifier == 'c')
-	{
-		char c = va_arg(args, int);
-
-		write(1, &c, 1);
-
-		return (1);
-	}
-	else if (specifier == 's')
-	{
-		char *str = va_arg(args, char *);
-
-		if (str == NULL)
-			str = "(null)";
-
-		while (str[len])
-			len++;
-		write(1, str, len);
-		return (len);
-	}
-	else if (specifier == '%')
-	{
-		write(1, "%", 1);
-		return (1);
-	}
-	return (0);
-}
-
-/**
  * handle_di - Handle d and i conversion specifiers
  * @args: Variable arguments list
  *
@@ -122,4 +83,39 @@ int print_number(int num)
 	{
 		return (write(1, (temp[0] = num + '0', temp), 1));
 	}
+}
+
+/**
+ * handle_format - Handle conversion specifiers
+ * @args: Variable arguments list
+ * @specifier: Conversion specifier
+ *
+ * Return: Number of characters printed for the specifier
+ */
+int handle_format(va_list args, char specifier)
+{
+	int len = 0;
+
+	if (specifier == 'c')
+	{
+		char c = va_arg(args, int);
+		write(1, &c, 1);
+		return 1;
+	}
+	else if (specifier == 's')
+	{
+		char *str = va_arg(args, char *);
+		if (str == NULL)
+			str = "(null)";
+		while (str[len])
+			len++;
+		write(1, str, len);
+		return len;
+	}
+	else if (specifier == '%')
+	{
+		write(1, "%", 1);
+		return 1;
+	}
+	return 0;
 }
