@@ -22,6 +22,9 @@ int _printf(const char *format, ...)
 					*(format + 1) == 's' ||
 					*(format + 1) == '%'
 					))
+		if (*(format + 1) == 'd' || *(format + 1) == 'i')
+			count += handle_di(args);
+		else
 		{
 			count += handle_format(args, *(format + 1));
 			format += 2;
