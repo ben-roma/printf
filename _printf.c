@@ -17,7 +17,11 @@ int _printf(const char *format, ...)
 
 	while (*format)
 	{
-		if (*format == '%' && (*(format + 1) == 'c' || *(format + 1) == 's' || *(format + 1) == '%'))
+		if (*format == '%' && (
+					*(format + 1) == 'c' ||
+					*(format + 1) == 's' ||
+					*(format + 1) == '%'
+					))
 		{
 			count += handle_format(args, *(format + 1));
 			format += 2;
