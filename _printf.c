@@ -27,11 +27,9 @@ int print_str(char *str)
 
 	while (*str)
 	{
-		write(1, str, 1);
+		count += write(1, str, 1);
 		str++;
-		count++;
 	}
-
 	return (count);
 }
 
@@ -60,7 +58,7 @@ int _printf(const char *format, ...)
 					str = va_arg(args, char *);
 					if (str == NULL)
 						str = "(null)";
-					count += write(1, str, 0);
+					count += print_str(str);
 					break;
 				case '%':
 					count += write(1, "%", 1);
