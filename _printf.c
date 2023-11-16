@@ -1,5 +1,38 @@
 #include "main.h"
 #include <unistd.h>
+/**
+ * print_char - Print a character
+ * @c: Character to print
+ *
+ * Return: Number of characters printed
+ */
+int print_char(char c)
+{
+	return (write(1, &c, 1));
+}
+
+/**
+ * print_str - Print a string
+ * @str: String to print
+ *
+ * Return: Number of characters printed
+ */
+int print_str(char *str)
+{
+	int count = 0;
+
+	if (str == NULL)
+		str = "(null)";
+
+	while (*str)
+	{
+		write(1, str, 1);
+		str++;
+		count++;
+	}
+
+	return (count);
+}
 
 int _printf(const char *format, ...)
 {
