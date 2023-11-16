@@ -12,5 +12,6 @@ int print_unsigned(unsigned int u);
 int print_octal(unsigned int o);
 int print_hex(unsigned int x, int uppercase);
 int print_S(char *str);
+int print_pointer(void *ptr);
 
 #endif /* MAIN_H */

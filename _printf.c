@@ -16,6 +16,7 @@ int _printf(const char *format, ...)
 	unsigned int u;
 	unsigned int o;
 	unsigned int x;
+	void *p;
 
 	va_start(args, format);
 
@@ -65,6 +66,11 @@ int _printf(const char *format, ...)
 					str = va_arg(args, char *);
 					count += print_S(str);
 					break;
+				case 'p':
+					p = va_arg(args, void *);
+					count += print_pointer(p);
+					break;
+
 				case '%':
 					count += write(1, "%", 1);
 					break;
