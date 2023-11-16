@@ -1,7 +1,6 @@
 #include "main.h"
 #include <stdio.h>
 #include <unistd.h>
-#include <string.h>
 
 /**
  * print_octal - Print an octal number
@@ -62,29 +61,12 @@ int print_S(char *str)
 	return (count);
 }
 
-int print_pointer(void *ptr, int plus, int space, int hash)
+int print_pointer(void *ptr)
 {
 	char buffer[20];
 	int count = 0;
 
 	sprintf(buffer, "%p", ptr);
-	if (plus)
-	{
-		write(1, "+", 1);
-		count++;
-	}
-	else if (space)
-       	{
-		write(1, " ", 1);
-		count++;
-	}
-	write(1, buffer, strlen(buffer));
-	count += strlen(buffer);
-	if (hash)
-	{
-		write(1, "#", 1);
-		count++;
-	}
 	count = print_str(buffer);
 	return (count);
 }
