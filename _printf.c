@@ -17,14 +17,20 @@ int _printf(const char *format, ...)
 	unsigned int o;
 	unsigned int x;
 	void *p;
-
+	int plus, space, hash;
+	
 	va_start(args, format);
 
 	for (ptr = format; *ptr != '\0'; ptr++)
 	{
+		plus = 0;
+		space = 0;
+		hash = 0;
+
 		if (*ptr == '%' && *(ptr + 1) != '\0')
 		{
 			ptr++;
+			ptr = check_flags(ptr, &plus, &space, &hash);
 			switch (*ptr)
 			{
 				case 'c':

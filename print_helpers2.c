@@ -70,3 +70,20 @@ int print_pointer(void *ptr)
 	count = print_str(buffer);
 	return (count);
 }
+
+const char *check_flags(const char *ptr, int *plus, int *space, int *hash)
+{
+	while (*ptr)
+	{
+		if (*ptr == '+')
+			*plus = 1;
+		else if (*ptr == ' ')
+			*space = 1;
+		else if (*ptr == '#')
+			*hash = 1;
+		else
+			break;
+		ptr++;
+	}
+	return (ptr);
+}

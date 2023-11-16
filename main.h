@@ -13,5 +13,6 @@ int print_octal(unsigned int o);
 int print_hex(unsigned int x, int uppercase);
 int print_S(char *str);
 int print_pointer(void *ptr);
+const char *check_flags(const char *ptr, int *plus, int *space, int *hash);
 
 #endif /* MAIN_H */
