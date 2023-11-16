@@ -29,7 +29,6 @@ int _printf(const char *format, ...)
 
 		if (*ptr == '%' && *(ptr + 1) != '\0')
 		{
-			ptr++;
 			ptr = check_flags(ptr, &plus, &space, &hash);
 			switch (*ptr)
 			{
@@ -74,7 +73,10 @@ int _printf(const char *format, ...)
 					break;
 				case 'p':
 					p = va_arg(args, void *);
-					count += print_pointer(p);
+					print_plus(&count, &plus);
+					print_space(&count, &space);
+					print_hash(&count, &hash);
+					count += print_pointer(p, plus, space, hash);
 					break;
 
 				case '%':
