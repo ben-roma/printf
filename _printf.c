@@ -52,27 +52,23 @@ int _printf(const char *format, ...)
 			{
 				case 'c':
 					c = va_arg(args, int);
-					write(1, &c, 1);
-					count++;
+					count += write(1, &c, 1);
 					break;
 				case 's':
 					count += write(1, va_arg(args, char *), 0);
 					break;
 				case '%':
-					write(1, "%", 1);
-					count++;
+					count += write(1, "%", 1);
 					break;
 				default:
-					write(1, "%", 1);
-					write(1, &(*ptr), 1);
-					count += 2;
+					count += write(1, "%", 1);
+					count += write(1, &(*ptr), 1);
 					break;
 			}
 		}
 		else
 		{
-			write(1, &(*ptr), 1);
-			count++;
+			count += write(1, &(*ptr), 1);
 		}
 	}
 	va_end(args);
