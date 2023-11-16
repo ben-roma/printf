@@ -18,7 +18,7 @@ int _printf(const char *format, ...)
 	unsigned int x;
 	void *p;
 	int plus, space, hash;
-	
+
 	va_start(args, format);
 
 	for (ptr = format; *ptr != '\0'; ptr++)

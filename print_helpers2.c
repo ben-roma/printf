@@ -65,7 +65,7 @@ int print_pointer(void *ptr)
 {
 	char buffer[20];
 	int count = 0;
-	
+
 	sprintf(buffer, "%p", ptr);
 	count = print_str(buffer);
 	return (count);
