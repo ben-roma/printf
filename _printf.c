@@ -5,7 +5,9 @@
 int _printf(const char *format, ...)
 {
 	va_list args;
+	char buffer[1024];
 	int count = 0;
+	int buffer_index = 0;
 	const char *ptr;
 	char c;
 	char *str;
@@ -74,5 +76,9 @@ int _printf(const char *format, ...)
 		}
 	}
 	va_end(args);
+	if (buffer_index > 0)
+	{
+		write(1, buffer, buffer_index);
+	}
 	return (count);
 }

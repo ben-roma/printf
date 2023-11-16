@@ -11,7 +11,7 @@
 int print_octal(unsigned int o)
 {
 	char buffer[20];
-	int count;
+	int count = 0;
 
 	sprintf(buffer, "%o", o);
 	count = print_str(buffer);
