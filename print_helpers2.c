@@ -34,3 +34,29 @@ int print_hex(unsigned int x, int uppercase)
 	count = print_str(buffer);
 	return (count);
 }
+
+int print_S(char *str)
+{
+	int count = 0;
+
+	if (str == NULL)
+		return (count);
+
+	while (*str)
+	{
+		char hex[3];
+
+		if (*str >= 32 && *str < 127)
+		{
+			count += write(1, str, 1);
+		}
+		else
+		{
+			count += write(1, "\\x", 2);
+			sprintf(hex, "%02X", *str);
+			count += write(1, hex, 2);
+		}
+		str++;
+	}
+	return (count);
+}

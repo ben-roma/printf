@@ -61,6 +61,10 @@ int _printf(const char *format, ...)
 					x = va_arg(args, unsigned int);
 					count += print_hex(x, 1);
 					break;
+				case 'S':
+					str = va_arg(args, char *);
+					count += print_S(str);
+					break;
 				case '%':
 					count += write(1, "%", 1);
 					break;
