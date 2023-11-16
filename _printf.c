@@ -1,5 +1,6 @@
 #include "main.h"
 #include <unistd.h>
+#include <stdarg.h>
 /**
  * print_char - Print a character
  * @c: Character to print
@@ -40,6 +41,7 @@ int _printf(const char *format, ...)
 	int count = 0;
 	const char *ptr;
 	char c;
+	char *str;
 
 	va_start(args, format);
 
@@ -55,13 +57,16 @@ int _printf(const char *format, ...)
 					count += write(1, &c, 1);
 					break;
 				case 's':
-					count += write(1, va_arg(args, char *), 0);
+					str = va_arg(args, char *);
+					if (str == NULL)
+						str = "(null)";
+					count += write(1, str, 0);
 					break;
 				case '%':
 					count += write(1, "%", 1);
 					break;
 				default:
-					count += write(1, "%", 1);
+					count += write(1, "%%", 1);
 					count += write(1, &(*ptr), 1);
 					break;
 			}
