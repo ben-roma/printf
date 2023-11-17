@@ -88,7 +88,7 @@ int _printf(const char *format, ...)
 						write(1, (*ptr == 'x') ? "x" : "X", 1);
 						count += 2;
 					}
-					count += print_hex(x, (*ptr == 'X'));
+					count += print_hex(x, 1);
 					break;
 				case 'S':
 					str = va_arg(args, char *);
