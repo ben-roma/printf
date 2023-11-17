@@ -4,7 +4,7 @@
 
 const char *check_flags(const char *ptr, int *plus, int *space, int *hash)
 {
-	while (*ptr == '+' || *ptr == ' ' || *ptr == '#')
+	while (*ptr)
 	{
 		if (*ptr == '+')
 			*plus = 1;
@@ -12,6 +12,8 @@ const char *check_flags(const char *ptr, int *plus, int *space, int *hash)
 			*space = 1;
 		else if (*ptr == '#')
 			*hash = 1;
+		else
+			break;
 		ptr++;
 	}
 	return (ptr);
