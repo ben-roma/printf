@@ -17,6 +17,7 @@ int _printf(const char *format, ...)
 	unsigned int o;
 	unsigned int x;
 	void *p;
+	int plus = 0, space = 0, hash = 0;
 
 	va_start(args, format);
 
@@ -24,6 +25,11 @@ int _printf(const char *format, ...)
 	{
 		if (*ptr == '%' && *(ptr + 1) != '\0')
 		{
+			plus = 0;
+			space = 0;
+			hash = 0;
+
+			ptr = check_flags(ptr + 1, &plus, &space, &hash);
 			ptr++;
 			switch (*ptr)
 			{
@@ -40,6 +46,22 @@ int _printf(const char *format, ...)
 				case 'd':
 				case 'i':
 					num = va_arg(args, int);
+					if (plus)
+					{
+						if (num >= 0)
+						{
+							write(1, "+", 1);
+							count++;
+						}
+					}
+					else if (space)
+					{
+						if (num >= 0)
+						{
+							write(1, " ", 1);
+							count++;
+						}
+					}
 					count += print_number(num);
 					break;
 				case 'b':
@@ -52,14 +74,29 @@ int _printf(const char *format, ...)
 					break;
 				case 'o':
 					o = va_arg(args, unsigned int);
+					if (hash)
+					{
+						write(1, "0", 1);
+						count++;
+					}
 					count += print_octal(o);
 					break;
 				case 'x':
 					x = va_arg(args, unsigned int);
+					if (hash)
+					{
+						write(1, "0x", 2);
+						count += 2;
+					}
 					count += print_hex(x, 0);
 					break;
 				case 'X':
 					x = va_arg(args, unsigned int);
+					if (hash)
+					{
+						write(1, "0X", 2);
+						count += 2;
+					}
 					count += print_hex(x, 1);
 					break;
 				case 'S':
