@@ -18,7 +18,7 @@ int _printf(const char *format, ...)
 	unsigned int x;
 	void *p;
 	int plus = 0, space = 0, hash = 0;
-	
+
 	va_start(args, format);
 
 	for (ptr = format; *ptr != '\0'; ptr++)
@@ -26,9 +26,10 @@ int _printf(const char *format, ...)
 		plus  = 0;
 		space = 0;
 		hash = 0;
+
 		if (*ptr == '%' && *(ptr + 1) != '\0')
 		{
-			ptr = check_flags(ptr, &plus, &space, &hash);
+			ptr = check_flags(ptr + 1, &plus, &space, &hash);
 			ptr++;
 
 			switch (*ptr)
@@ -46,6 +47,16 @@ int _printf(const char *format, ...)
 				case 'd':
 				case 'i':
 					num = va_arg(args, int);
+					if (plus && num >= 0)
+					{
+						write(1, "+", 1);
+						count++;
+					}
+					else if (space && num >= 0)
+					{
+						write(1, " ", 1);
+						count++;
+					}
 					count += print_number(num);
 					break;
 				case 'b':
@@ -58,6 +69,11 @@ int _printf(const char *format, ...)
 					break;
 				case 'o':
 					o = va_arg(args, unsigned int);
+					if (hash)
+					{
+						write(1, "0", 1);
+						count++;
+					}
 					count += print_octal(o);
 					break;
 				case 'x':
@@ -66,7 +82,13 @@ int _printf(const char *format, ...)
 					break;
 				case 'X':
 					x = va_arg(args, unsigned int);
-					count += print_hex(x, 1);
+					if (hash)
+					{
+						write(1, "0", 1);
+						write(1, (*ptr == 'x') ? "x" : "X", 1);
+						count += 2;
+					}
+					count += print_hex(x, (*ptr == 'X'));
 					break;
 				case 'S':
 					str = va_arg(args, char *);
@@ -95,5 +117,5 @@ int _printf(const char *format, ...)
 	{
 		write(1, buffer, buffer_index);
 	}
-	return count;
+	return (count);
 }
