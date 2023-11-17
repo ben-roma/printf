@@ -70,10 +70,6 @@ int _printf(const char *format, ...)
 				case 'o':
 					o = va_arg(args, unsigned int);
 					if (hash)
-					{
-						write(1, "0", 1);
-						count++;
-					}
 					count += print_octal(o);
 					break;
 				case 'x':
@@ -82,12 +78,6 @@ int _printf(const char *format, ...)
 					break;
 				case 'X':
 					x = va_arg(args, unsigned int);
-					if (hash)
-					{
-						write(1, "0", 1);
-						write(1, (*ptr == 'x') ? "x" : "X", 1);
-						count += 2;
-					}
 					count += print_hex(x, 1);
 					break;
 				case 'S':
