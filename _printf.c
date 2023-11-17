@@ -47,16 +47,6 @@ int _printf(const char *format, ...)
 				case 'd':
 				case 'i':
 					num = va_arg(args, int);
-					if (plus && num >= 0)
-					{
-						write(1, "+", 1);
-						count++;
-					}
-					else if (space && num >= 0)
-					{
-						write(1, " ", 1);
-						count++;
-					}
 					count += print_number(num);
 					break;
 				case 'b':
