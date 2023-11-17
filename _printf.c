@@ -29,7 +29,7 @@ int _printf(const char *format, ...)
 
 		if (*ptr == '%' && *(ptr + 1) != '\0')
 		{
-			ptr = check_flags(ptr + 1, &plus, &space, &hash);
+			ptr = check_flags(ptr, &plus, &space, &hash);
 			ptr++;
 
 			switch (*ptr)
