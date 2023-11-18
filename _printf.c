@@ -28,6 +28,8 @@ int _printf(const char *format, ...)
 		plus  = 0;
 		space = 0;
 		hash = 0;
+		long_modifier = 0;
+		short_modifier = 0;
 
 		if (*ptr == '%' && *(ptr + 1) != '\0')
 		{
@@ -100,13 +102,14 @@ int _printf(const char *format, ...)
 					else if (short_modifier == 1)
 					{
 						int temp = va_arg(args, int);
-						str = (char *)(intptr_t)temp;
+						char c = (char)temp;
+						count += write(1, &c, 1);
 					}
 					else
 					{
-						str = va_arg(args, char *);
+						char *str = va_arg(args, char *);
+						count += print_S(str);
 					}
-					count += print_S(str);
 					break;
 				case 'p':
 					p = (void *)(va_arg(args, long));
