@@ -10,6 +10,7 @@ int _printf(const char *format, ...)
 	int count = 0;
 	int buffer_index = 0;
 	const char *ptr;
+	char c;
 	char *str;
 	int num;
 	unsigned int ub;
@@ -20,6 +21,7 @@ int _printf(const char *format, ...)
 	int plus = 0, space = 0, hash = 0;
 	int long_modifier = 0;
 	int short_modifier = 0;
+	int width = 0;
 
 	va_start(args, format);
 
@@ -30,10 +32,12 @@ int _printf(const char *format, ...)
 		hash = 0;
 		long_modifier = 0;
 		short_modifier = 0;
+		width = 0;
 
 		if (*ptr == '%' && *(ptr + 1) != '\0')
 		{
 			ptr = check_flags(ptr, &plus, &space, &hash);
+			ptr = get_width(ptr, &width);
 			ptr++;
 			while (*ptr == 'l' || *ptr == 'h')
 			{
@@ -47,8 +51,8 @@ int _printf(const char *format, ...)
 			switch (*ptr)
 			{
 				case 'c':
-					va_arg(args, int);
-					count += print_char(va_arg(args, int));
+					c = va_arg(args, int);
+					count += print_char(c);
 					break;
 				case 's':
 					str = va_arg(args, char *);
@@ -62,36 +66,36 @@ int _printf(const char *format, ...)
 						(long_modifier == 1) ? va_arg(args, long) :
 						(short_modifier == 1) ? (short)va_arg(args, int) :
 						va_arg(args, int);
-					count += print_number(num);
+					count += print_number_with_width(num, width);
 					break;
 				case 'b':
 					ub = va_arg(args, unsigned int);
-					count += print_binary(ub);
+					count += print_binary_with_width(ub, width);
 					break;
 				case 'u':
 					u = (long_modifier == 2) ? va_arg(args, unsigned long) :
 						(long_modifier == 1) ? va_arg(args, unsigned long) :
 						(short_modifier == 1) ? (unsigned short)va_arg(args, unsigned int) :
 						va_arg(args, unsigned int);
-					count += print_unsigned(u);
+					count += print_unsigned_with_width(u, width);
 					break;
 				case 'o':
 					o = (long_modifier == 2) ? va_arg(args, unsigned long) :
 						(long_modifier == 1) ? va_arg(args, unsigned long) :
 						(short_modifier == 1) ? (unsigned short)va_arg(args, unsigned int) :
 						va_arg(args, unsigned int);
-					count += print_octal(o);
+					count += print_octal_with_width(o, width);
 					break;
 				case 'x':
 					x = va_arg(args, unsigned int);
-					count += print_hex(x, 0);
+					count += print_hex_with_width(x, 0, width);
 					break;
 				case 'X':
 					x = (long_modifier == 2) ? va_arg(args, unsigned long) :
 						(long_modifier == 1) ? va_arg(args, unsigned long) :
 						(short_modifier == 1) ? (unsigned short)va_arg(args, unsigned int) :
 						va_arg(args, unsigned int);
-					count += print_hex(x, 1);
+					count += print_hex_with_width(x, 1, width);
 					break;
 				case 'S':
 					if (long_modifier == 1)
@@ -108,12 +112,12 @@ int _printf(const char *format, ...)
 					else
 					{
 						char *str = va_arg(args, char *);
-						count += print_S(str);
+						count += print_S_with_width(str, width);
 					}
 					break;
 				case 'p':
 					p = (void *)(va_arg(args, long));
-					count += print_pointer(p);
+					count += print_pointer_with_width(p, width);
 					break;
 				case '%':
 					count += write(1, "%", 1);

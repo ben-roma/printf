@@ -1,6 +1,7 @@
 #include "main.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <ctype.h>
 
 /**
  * print_octal - Print an octal number
@@ -69,4 +70,14 @@ int print_pointer(void *ptr)
 	sprintf(buffer, "%p", ptr);
 	count = print_str(buffer);
 	return (count);
+}
+
+const char *get_width(const char *ptr, int *width)
+{
+	while (isdigit(*ptr))
+	{
+		*width = (*width * 10) + (*ptr - '0');
+		ptr++;
+	}
+	return (ptr);
 }

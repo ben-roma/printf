@@ -19,3 +19,12 @@ const char *check_flags(const char *ptr, int *plus, int *space, int *hash)
 	}
 	return (ptr);
 }
+
+int print_number_with_width(int num, int width)
+{
+	int count = 0;
+	count += write(1, " ", width - count);
+	count += print_number(num);
+	return (count);
+}
+
